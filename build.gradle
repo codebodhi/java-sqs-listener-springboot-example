@@ -1,0 +1,40 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.0'
+    id 'com.diffplug.spotless' version '6.25.0'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.codebodhi.sqslib.springboot'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.17.0')
+        target 'src/**/*.java'
+    }
+}
+
+dependencies {
+    //SpringBoot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //mysql
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    //SqsListener
+    implementation 'com.codebodhi:java-sqs-listener:2.6.0'
+    //lombok
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+check.dependsOn spotlessCheck
